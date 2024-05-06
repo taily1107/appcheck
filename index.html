@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MỜI BẠN CHỌN</title>
+</head>
+<body>
+<h2>MỜI BẠN CHỌN</h2>
+<form id="myForm">
+  <label for="number">SỐ BÀN:</label><br>
+  <input type="number" id="number" name="number"><br><br>
+  <label for="request">Yêu cầu:</label><br>
+  <textarea id="request" name="request" rows="4" cols="50"></textarea><br><br>
+  <input type="submit" value="Gửi">
+  <label for="meetEmployee">Gặp nhân viên</label>
+  <input type="checkbox" id="meetEmployee" name="meetEmployee"><br><br>
+</form>
+
+<script>
+document.getElementById("myForm").addEventListener("submit", function(event) {
+  event.preventDefault();
+  var number = document.getElementById("number").value;
+  var request = document.getElementById("request").value;
+  var meetEmployee = document.getElementById("meetEmployee").checked;
+  var existingData = localStorage.getItem("data");
+  if(existingData) {
+    existingData = JSON.parse(existingData);
+  } else {
+    existingData = [];
+  }
+  existingData.push({number: number, request: request, meetEmployee: meetEmployee});
+  localStorage.setItem("data", JSON.stringify(existingData));
+  
+  alert("Đã gửi thành công!");
+});
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+

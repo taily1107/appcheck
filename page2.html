@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trang 2</title>
+</head>
+<body>
+<h2>Trang 2</h2>
+<div id="messages"></div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  var messagesContainer = document.getElementById("messages");
+  
+  // Lấy dữ liệu từ localStorage và hiển thị lên trang 2
+  function displayMessages() {
+    messagesContainer.innerHTML = ""; // Xóa nội dung cũ
+    var data = localStorage.getItem("data");
+    if (data) {
+      data = JSON.parse(data);
+      data.forEach(function(item, index) {
+        var messageWrapper = document.createElement("div");
+        var messageContent = document.createElement("p");
+        messageContent.textContent = "Số: " + item.number + ", Yêu cầu: " + item.request;
+        if (item.meetEmployee) {
+          messageContent.textContent += ", gặp nhân viên";
+        }
+        var deleteButton = document.createElement("button");
+        deleteButton.textContent = "Xóa";
+        deleteButton.addEventListener("click", function() {
+          deleteMessage(index);
+        });
+        messageWrapper.appendChild(messageContent);
+        messageWrapper.appendChild(deleteButton);
+        messagesContainer.appendChild(messageWrapper);
+      });
+    }
+  }
+  
+  function deleteMessage(index) {
+    var data = localStorage.getItem("data");
+    if (data) {
+      data = JSON.parse(data);
+      data.splice(index, 1);
+      localStorage.setItem("data", JSON.stringify(data));
+      displayMessages(); // Cập nhật hiển thị sau khi xóa
+    }
+  }
+  
+  displayMessages(); // Hiển thị dữ liệu ban đầu
+  
+  // Theo dõi sự thay đổi của localStorage và cập nhật trang 2 khi có dữ liệu mới
+  window.addEventListener("storage", function(event) {
+    if (event.key === "data") {
+      displayMessages();
+    }
+  });
+});
+</script>
+
+</body>
+</html>
+
