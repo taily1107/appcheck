@@ -13,9 +13,9 @@
 document.addEventListener("DOMContentLoaded", function() {
   var messagesContainer = document.getElementById("messages");
   
-  // Lấy dữ liệu từ localStorage và hiển thị lên trang 2
+  // Function to display messages from localStorage
   function displayMessages() {
-    messagesContainer.innerHTML = ""; // Xóa nội dung cũ
+    messagesContainer.innerHTML = ""; // Clear previous content
     var data = localStorage.getItem("data");
     if (data) {
       data = JSON.parse(data);
@@ -38,19 +38,20 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   }
   
+  // Function to delete a message
   function deleteMessage(index) {
     var data = localStorage.getItem("data");
     if (data) {
       data = JSON.parse(data);
       data.splice(index, 1);
       localStorage.setItem("data", JSON.stringify(data));
-      displayMessages(); // Cập nhật hiển thị sau khi xóa
+      displayMessages(); // Update display after deletion
     }
   }
   
-  displayMessages(); // Hiển thị dữ liệu ban đầu
+  displayMessages(); // Display initial data
   
-  // Theo dõi sự thay đổi của localStorage và cập nhật trang 2 khi có dữ liệu mới
+  // Listen for changes in localStorage and update page when new data is available
   window.addEventListener("storage", function(event) {
     if (event.key === "data") {
       displayMessages();
@@ -61,4 +62,5 @@ document.addEventListener("DOMContentLoaded", function() {
 
 </body>
 </html>
+
 
